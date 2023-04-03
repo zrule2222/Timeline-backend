@@ -3,6 +3,7 @@ from typing import List
 from sqlalchemy.sql import func
 from flask_sqlalchemy import Pagination
 import datetime
+from models.RecordProperty import PropertyModel
 
 class RecordModel(db.Model):
     __tablename__ = "records"
@@ -12,6 +13,7 @@ class RecordModel(db.Model):
     date = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     description_short = db.Column(db.String, nullable=False)
+    property = db.relationship('PropertyModel', lazy="dynamic")
     record_type = db.Column(db.String, nullable=False)
     is_visible = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
