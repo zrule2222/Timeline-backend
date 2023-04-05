@@ -9,7 +9,7 @@ from marshmallow import ValidationError
 
 from resources.User import User,UserList,user_ns,users_ns
 from resources.HistoryRecord import Image,Record,RecordList,VisibleStatusChange,  VisibleRecordList, QrCodes,DeleteImage, QR_codes_ns, visible_records_ns, history_record_ns,history_records_ns,image_ns, visible_status_change_ns,Image_delete_ns
-# from resources.RecordProperty import RecordPropertyList, properties_ns
+from resources.RecordProperty import RecordPropertyList, Property, PropertyDelete, properties_ns,property_ns, property_delete_ns
 app = Flask(__name__)
 CORS(app)
 bcrypt = Bcrypt(app)
@@ -31,7 +31,10 @@ api.add_namespace(visible_status_change_ns)
 api.add_namespace(visible_records_ns)
 api.add_namespace(QR_codes_ns)
 api.add_namespace(Image_delete_ns)
-# api.add_namespace(properties_ns)
+api.add_namespace(properties_ns)
+api.add_namespace(property_ns)
+api.add_namespace(property_delete_ns)
+
 
 @app.before_first_request
 def create_tables():
@@ -52,7 +55,9 @@ visible_status_change_ns.add_resource(VisibleStatusChange, '/<int:id>')
 visible_records_ns.add_resource(VisibleRecordList, "")
 QR_codes_ns.add_resource(QrCodes, '/<int:id>')
 Image_delete_ns.add_resource(DeleteImage, '/<int:id>')
-# properties_ns.add_resource(RecordPropertyList, '/<int:fk_record>')
+properties_ns.add_resource(RecordPropertyList, '/<int:fk_record>')
+property_ns.add_resource(Property, '/<int:id>')
+property_delete_ns.add_resource(PropertyDelete, '')
 
 if __name__ == '__main__':
     db.init_app(app)

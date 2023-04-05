@@ -28,7 +28,7 @@ class PropertyModel(db.Model):
     
     @classmethod
     def find_by_id(cls, id) -> "PropertyModel":
-        return cls.query.filter_by(id=id)
+        return cls.query.filter_by(id=id).first()
     
     @classmethod
     def find_all_record_properties(cls, fk_record) -> "PropertyModel":
@@ -44,4 +44,5 @@ class PropertyModel(db.Model):
     def delete_from_db(self) -> None:
       db.session.delete(self)
       db.session.commit()
+
     
